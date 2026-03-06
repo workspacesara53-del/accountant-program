@@ -1,0 +1,40 @@
+
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "type": "object",
+      "description": "Represents a single product within an order for precise financial and inventory tracking.",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "customerName": { "type": "string" },
+        "productName": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "wholesalePrice": { "type": "number" },
+        "salePrice": { "type": "number" },
+        "quantityOrdered": { "type": "number" },
+        "quantityReceived": { "type": "number" },
+        "quantityDelivered": { "type": "number" },
+        "status": {
+          "type": "string",
+          "enum": ["new", "ordered_from_supplier", "partially_received", "fully_received", "unavailable", "completed"]
+        },
+        "customerPaid": { "type": "number" },
+        "supplierPaid": { "type": "number" },
+        "note": { "type": "string" },
+        "userId": { "type": "string", "description": "The UID of the user who owns this record." }
+      },
+      "required": ["date", "customerName", "productName", "supplierName", "wholesalePrice", "salePrice", "quantityOrdered", "status", "userId"]
+    }
+  },
+  "auth": {
+    "providers": ["password"]
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of all order items. Each document represents one product in an order."
+    }
+  }
+}
